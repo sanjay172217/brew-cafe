@@ -1,0 +1,4 @@
+Flask
+Flask-WTF
+mysql-connector-python
+gunicorn

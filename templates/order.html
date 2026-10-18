@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Checkout | Brew Café</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+
+    <style>
+        .checkout-page {
+            max-width: 1100px;
+            margin: 50px auto;
+            padding: 25px;
+        }
+
+        .checkout-heading {
+            text-align: center;
+            margin-bottom: 35px;
+        }
+
+        .checkout-heading h1 {
+            font-size: 38px;
+            margin-bottom: 10px;
+        }
+
+        .checkout-layout {
+            display: grid;
+            grid-template-columns: 1.4fr 1fr;
+            gap: 30px;
+        }
+
+        .checkout-card {
+            background: #fffaf3;
+            padding: 30px;
+            border-radius: 18px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+        }
+
+        .checkout-card h2 {
+            margin-bottom: 25px;
+            color: #55351f;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 13px;
+            border: 1px solid #d9c8b5;
+            border-radius: 9px;
+            font-size: 15px;
+            font-family: inherit;
+            box-sizing: border-box;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: 2px solid #a8754e;
+            border-color: #a8754e;
+        }
+
+        .form-group textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        .checkout-item {
+            display: flex;
+            justify-content: space-between;
+            gap: 15px;
+            padding: 15px 0;
+            border-bottom: 1px solid #eadfD2;
+        }
+
+        .checkout-item-name {
+            font-weight: 600;
+        }
+
+        .checkout-item-detail {
+            font-size: 14px;
+            margin-top: 5px;
+            color: #806b59;
+        }
+
+        .checkout-total-row {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+            font-size: 18px;
+            font-weight: 700;
+        }
+
+        .checkout-total-row.final {
+            font-size: 23px;
+            color: #754522;
+            padding-top: 15px;
+            border-top: 2px solid #d9c8b5;
+        }
+
+        .checkout-button {
+            width: 100%;
+            border: none;
+            cursor: pointer;
+            margin-top: 25px;
+            padding: 15px;
+            border-radius: 10px;
+            background: #70452a;
+            color: white;
+            font-size: 16px;
+            font-weight: 700;
+        }
+
+        .checkout-button:hover {
+            background: #4d2e1b;
+        }
+
+        .checkout-button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .checkout-message {
+            text-align: center;
+            padding: 20px;
+            color: #70452a;
+        }
+
+        @media (max-width: 750px) {
+            .checkout-layout {
+                grid-template-columns: 1fr;
+            }
+
+            .checkout-heading h1 {
+                font-size: 30px;
+            }
+
+            .checkout-page {
+                margin: 20px auto;
+                padding: 15px;
+            }
+
+            .checkout-card {
+                padding: 22px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header class="navbar">
+    <div class="container nav-container">
+        <a href="/" class="logo">☕ Brew Café</a>
+
+        <nav class="nav-links">
+            <a href="/">Home</a>
+            <a href="/menu">Menu</a>
+            <a href="/cart">Cart</a>
+        </nav>
+    </div>
+</header>
+
+<main class="checkout-page">
+
+    <div class="checkout-heading">
+        <h1>Complete Your Order ☕</h1>
+        <p>Freshly prepared with love, just for you.</p>
+    </div>
+
+    <div class="checkout-layout">
+
+        <!-- Customer information -->
+        <section class="checkout-card">
+
+            <h2>Delivery Details</h2>
+
+            <form id="checkoutForm">
+
+                <div class="form-group">
+                    <label for="customerName">Full Name</label>
+
+                    <input
+                        type="text"
+                        id="customerName"
+                        name="customerName"
+                        placeholder="Enter your full name"
+                        maxlength="100"
+                        autocomplete="name"
+                        required
+                    >
+                </div>
+
+                <div class="form-group">
+                    <label for="phone">Phone Number</label>
+
+                    <input
+                        type="tel"
+                        id="phone"
+                        name="phone"
+                        placeholder="Enter your phone number"
+                        maxlength="15"
+                        autocomplete="tel"
+                        pattern="[0-9+() -]{7,15}"
+                        required
+                    >
+                </div>
+
+                <div class="form-group">
+                    <label for="address">Delivery Address</label>
+
+                    <textarea
+                        id="address"
+                        name="address"
+                        placeholder="Enter your complete delivery address"
+                        maxlength="500"
+                        autocomplete="street-address"
+                        required
+                    ></textarea>
+                </div>
+
+                <button
+                    type="submit"
+                    class="checkout-button"
+                    id="placeOrderButton"
+                >
+                    Place Order ☕
+                </button>
+
+            </form>
+
+        </section>
+
+        <!-- Order summary -->
+        <section class="checkout-card">
+
+            <h2>Your Order 🛒</h2>
+
+            <div id="checkoutItems"></div>
+
+            <div id="emptyCheckout" class="checkout-message" hidden>
+                Your cart is empty!
+
+                <p>
+                    <a href="/menu">Explore our menu</a>
+                </p>
+            </div>
+
+            <div class="checkout-total-row">
+                <span>Subtotal</span>
+                <span id="checkoutSubtotal">₹0</span>
+            </div>
+
+            <div class="checkout-total-row final">
+                <span>Total</span>
+                <span id="checkoutTotal">₹0</span>
+            </div>
+
+            <p style="margin-top: 20px; font-size: 13px; color: #806b59;">
+                Demo checkout: no payment will be collected.
+            </p>
+
+        </section>
+
+    </div>
+
+</main>
+
+<footer style="text-align:center; padding:25px;">
+    <p>© <span id="year"></span> Brew Café | Made with ☕ and ❤️</p>
+</footer>
+
+<script src="{{ url_for('static', filename='js/order.js') }}" defer></script>
+
+</body>
+</html>

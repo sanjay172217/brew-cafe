@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Brew Café | Good Food, Good Mood</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <script src="{{ url_for('static', filename='js/script.js') }}" defer></script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+<header class="navbar">
+    <a href="/" class="logo">☕ <span>Brew Café</span></a>
+
+    <button class="menu-toggle" id="menuToggle" aria-label="Toggle navigation">
+        ☰
+    </button>
+
+    <nav id="navLinks">
+        <a href="#home">Home</a>
+        <a href="#menu">Menu</a>
+        <a href="#about">About</a>
+        <a href="#contact">Contact</a>
+        <a href="#menu" class="nav-order">Explore Menu ↗</a>
+    </nav>
+</header>
+
+<main>
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <span class="eyebrow">YOUR DAILY DOSE OF HAPPINESS</span>
+
+            <h1>Good Coffee.<br>Good Food.<br><span>Good Mood.</span></h1>
+
+            <p>
+                Freshly brewed coffee, delicious food, and a cozy place
+                to slow down, relax, and enjoy every little moment.
+            </p>
+
+            <div class="hero-buttons">
+                <a href="#menu" class="btn btn-primary">Explore Our Menu ↗</a>
+                <a href="#about" class="btn btn-outline">Our Story</a>
+            </div>
+
+            <div class="hero-note">
+                <span>✦ Freshly brewed daily</span>
+                <span>✦ Made with love</span>
+            </div>
+        </div>
+
+        <div class="hero-image">
+            <img
+                src="https://images.unsplash.com/photo-1442512595331-e89e73853f31?auto=format&fit=crop&w=1200&q=85"
+                alt="Freshly brewed coffee in a cozy café">
+            <div class="image-label">
+                <span>OUR SIGNATURE</span>
+                <strong>Perfectly Brewed Coffee</strong>
+            </div>
+        </div>
+    </section>
+
+    <section class="features">
+        <div class="feature">
+            <span class="feature-icon">☕</span>
+            <div>
+                <h3>Premium Coffee</h3>
+                <p>Rich taste, quality beans</p>
+            </div>
+        </div>
+
+        <div class="feature">
+            <span class="feature-icon">♡</span>
+            <div>
+                <h3>Made with Love</h3>
+                <p>Freshness in every bite</p>
+            </div>
+        </div>
+
+        <div class="feature">
+            <span class="feature-icon">✦</span>
+            <div>
+                <h3>Cozy Atmosphere</h3>
+                <p>Your perfect happy place</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="menu-section" id="menu">
+        <div class="section-heading">
+            <div>
+                <span class="eyebrow">A LITTLE TASTE OF HAPPINESS</span>
+                <h2>Our Popular Picks</h2>
+                <p>Good things are brewing. Find your new favourite.</p>
+            </div>
+
+            <a href="#contact" class="text-link">Discover More ↗</a>
+        </div>
+
+        <div class="menu-grid">
+            <article class="menu-card">
+                <div class="food-image">
+                    <img src="https://images.unsplash.com/photo-1534778101976-62847782c213?auto=format&fit=crop&w=700&q=80"
+                         alt="Cappuccino coffee">
+                    <span class="badge">BESTSELLER</span>
+                </div>
+                <div class="food-details">
+                    <div class="food-title">
+                        <h3>Cappuccino</h3>
+                        <span>₹120</span>
+                    </div>
+                    <p>Espresso, steamed milk and silky foam.</p>
+                    <button class="add-button" data-item="Cappuccino" data-price="120">
+                        Add to Order <span>+</span>
+                    </button>
+                </div>
+            </article>
+
+            <article class="menu-card">
+                <div class="food-image">
+                    <img src="https://images.unsplash.com/photo-1461023058943-07fcbe16d735?auto=format&fit=crop&w=700&q=80"
+                         alt="Iced coffee">
+                </div>
+                <div class="food-details">
+                    <div class="food-title">
+                        <h3>Iced Coffee</h3>
+                        <span>₹140</span>
+                    </div>
+                    <p>Chilled coffee for your refreshing moments.</p>
+                    <button class="add-button" data-item="Iced Coffee" data-price="140">
+                        Add to Order <span>+</span>
+                    </button>
+                </div>
+            </article>
+
+            <article class="menu-card">
+                <div class="food-image">
+                    <img src="https://images.unsplash.com/photo-1555507036-ab1f4038808a?auto=format&fit=crop&w=700&q=80"
+                         alt="Freshly baked croissant">
+                </div>
+                <div class="food-details">
+                    <div class="food-title">
+                        <h3>Butter Croissant</h3>
+                        <span>₹90</span>
+                    </div>
+                    <p>Golden, flaky and freshly baked.</p>
+                    <button class="add-button" data-item="Butter Croissant" data-price="90">
+                        Add to Order <span>+</span>
+                    </button>
+                </div>
+            </article>
+
+            <article class="menu-card">
+                <div class="food-image">
+                    <img src="https://images.unsplash.com/photo-1578985545062-69928b1d9587?auto=format&fit=crop&w=700&q=80"
+                         alt="Chocolate cake">
+                </div>
+                <div class="food-details">
+                    <div class="food-title">
+                        <h3>Chocolate Cake</h3>
+                        <span>₹160</span>
+                    </div>
+                    <p>Rich chocolate indulgence in every bite.</p>
+                    <button class="add-button" data-item="Chocolate Cake" data-price="160">
+                        Add to Order <span>+</span>
+                    </button>
+                </div>
+            </article>
+        </div>
+
+        <div class="cart-notice" id="cartNotice" role="status" aria-live="polite"></div>
+    </section>
+
+    <section class="about-section" id="about">
+        <div class="about-image">
+            <img src="https://images.unsplash.com/photo-1445116572660-236099ec97a0?auto=format&fit=crop&w=1000&q=85"
+                 alt="Warm and welcoming café interior">
+        </div>
+
+        <div class="about-content">
+            <span class="eyebrow">MORE THAN JUST COFFEE</span>
+            <h2>A little warmth<br>in every cup.</h2>
+            <p>
+                At Brew Café, we believe the best moments are often the
+                simplest ones. A good cup of coffee, a delicious bite,
+                and conversations that make you smile.
+            </p>
+            <p>
+                Whether you're catching up with friends, working on a
+                new idea, or taking a well-deserved break, there's
+                always a place for you here.
+            </p>
+            <a href="#contact" class="btn btn-primary">Come Say Hello ↗</a>
+        </div>
+    </section>
+
+    <section class="visit-section" id="contact">
+        <span class="eyebrow">YOUR TABLE IS WAITING</span>
+        <h2>Make yourself at home.</h2>
+        <p>Great coffee, good company, and a little moment just for you.</p>
+        <a href="mailto:hello@brewcafe.example" class="btn btn-primary">
+            Get in Touch ↗
+        </a>
+    </section>
+</main>
+
+<footer class="footer">
+    <a href="/" class="logo">☕ <span>Brew Café</span></a>
+    <p>Good Food. Good Mood. Made with ♥.</p>
+    <p class="copyright">© <span id="year"></span> Brew Café. Student project.</p>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Your Cart | Brew Café</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+
+    <script src="{{ url_for('static', filename='js/cart.js') }}" defer></script>
+</head>
+
+<body>
+
+<header class="navbar">
+    <a href="/" class="logo">☕ <span>Brew Café</span></a>
+
+    <button class="menu-toggle" id="menuToggle"
+            aria-label="Toggle navigation"
+            aria-expanded="false">☰</button>
+
+    <nav id="navLinks">
+        <a href="/">Home</a>
+        <a href="/menu">Menu</a>
+        <a href="/cart">Cart 🛒</a>
+        <a href="/booking">Book Table</a>
+        <a href="/about">About</a>
+        <a href="/contact">Contact</a>
+    </nav>
+</header>
+
+<main class="cart-page">
+
+    <section class="cart-heading">
+        <span class="eyebrow">YOUR FAVOURITES, ALL IN ONE PLACE</span>
+        <h1>Your Shopping Cart 🛒</h1>
+        <p>Review your selection before placing your order.</p>
+    </section>
+
+    <section class="cart-layout">
+
+        <div class="cart-items-section">
+            <div class="cart-section-heading">
+                <h2>Order Items</h2>
+                <a href="/menu">← Continue Shopping</a>
+            </div>
+
+            <div id="cartItems"></div>
+
+            <div id="emptyCart" class="empty-cart" hidden>
+                <div class="empty-cart-icon">☕</div>
+                <h2>Your cart is waiting for something delicious!</h2>
+                <p>Explore our menu and find your new favourite.</p>
+                <a href="/menu" class="btn btn-primary">Explore Menu ↗</a>
+            </div>
+        </div>
+
+        <aside class="cart-summary">
+            <h2>Order Summary</h2>
+
+            <div class="summary-row">
+                <span>Items</span>
+                <span id="itemCount">0</span>
+            </div>
+
+            <div class="summary-row">
+                <span>Subtotal</span>
+                <span id="subtotal">₹0</span>
+            </div>
+
+            <div class="summary-row">
+                <span>Delivery</span>
+                <span>₹0</span>
+            </div>
+
+            <div class="summary-total">
+                <span>Total</span>
+                <span id="total">₹0</span>
+            </div>
+
+            <button id="checkoutButton"
+                    class="checkout-button"
+                    type="button">
+                Proceed to Checkout →
+            </button>
+
+            <p class="cart-note">
+                ☕ Freshly prepared with love at Brew Café.
+            </p>
+        </aside>
+
+    </section>
+
+</main>
+
+<footer class="footer">
+    <a href="/" class="logo">☕ <span>Brew Café</span></a>
+    <p>Good Food. Good Mood. Made with ♥.</p>
+    <p class="copyright">© <span id="year"></span> Brew Café. Student project.</p>
+</footer>
+
+</body>
+</html>

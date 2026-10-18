@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Admin Login | Brew Café</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            background: radial-gradient(circle at top, #34251a, #100d0a 65%);
+            color: #f7efe4;
+            font-family: Arial, sans-serif;
+        }
+
+        .login-card {
+            width: 100%;
+            max-width: 420px;
+            padding: 38px;
+            background: #1b1713;
+            border: 1px solid #8b6b35;
+            border-radius: 18px;
+            box-shadow: 0 20px 70px #0009;
+        }
+
+        .logo {
+            text-align: center;
+            font-size: 52px;
+        }
+
+        h1 {
+            margin: 10px 0;
+            text-align: center;
+            color: #dfba70;
+        }
+
+        .subtitle {
+            margin-bottom: 30px;
+            text-align: center;
+            color: #b9a998;
+        }
+
+        label {
+            display: block;
+            margin: 18px 0 8px;
+            color: #dfba70;
+        }
+
+        input {
+            width: 100%;
+            padding: 13px;
+            border: 1px solid #574633;
+            border-radius: 8px;
+            background: #100d0a;
+            color: white;
+            font-size: 16px;
+        }
+
+        input:focus {
+            outline: 2px solid #dfba70;
+        }
+
+        button {
+            width: 100%;
+            margin-top: 25px;
+            padding: 14px;
+            border: 0;
+            border-radius: 8px;
+            background: linear-gradient(135deg, #f0d18a, #b78a3c);
+            color: #21170b;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        button:hover {
+            filter: brightness(1.1);
+        }
+
+        .error {
+            padding: 11px;
+            border: 1px solid #87433c;
+            border-radius: 7px;
+            background: #401d1a;
+            color: #ffb9ad;
+        }
+
+        .back-link {
+            display: block;
+            margin-top: 22px;
+            text-align: center;
+            color: #dfba70;
+            text-decoration: none;
+        }
+
+        .back-link:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+
+<body>
+
+    <main class="login-card">
+
+        <div class="logo">☕</div>
+
+        <h1>BREW CAFÉ</h1>
+
+        <p class="subtitle">Luxury Admin Portal</p>
+
+        {% with messages = get_flashed_messages() %}
+            {% for message in messages %}
+                <p class="error">{{ message }}</p>
+            {% endfor %}
+        {% endwith %}
+
+        <form method="POST" action="{{ url_for('admin_login') }}">
+
+            <input
+                type="hidden"
+                name="csrf_token"
+                value="{{ csrf_token() }}"
+            >
+
+            <label for="username">Administrator Username</label>
+
+            <input
+                type="text"
+                id="username"
+                name="username"
+                autocomplete="username"
+                maxlength="50"
+                required
+            >
+
+            <label for="password">Password</label>
+
+            <input
+                type="password"
+                id="password"
+                name="password"
+                autocomplete="current-password"
+                required
+            >
+
+            <button type="submit">SIGN IN →</button>
+
+        </form>
+
+        <a href="/" class="back-link">← Return to Brew Café</a>
+
+    </main>
+
+</body>
+</html>

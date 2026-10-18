@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Order Confirmed | Brew Café</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+
+    <style>
+        body {
+            margin: 0;
+            background: #f8f2e9;
+            font-family: Arial, sans-serif;
+            color: #382719;
+        }
+
+        .success-container {
+            max-width: 650px;
+            margin: 50px auto;
+            padding: 30px;
+            text-align: center;
+            background: #fffaf3;
+            border-radius: 20px;
+            box-shadow: 0 10px 35px rgba(0,0,0,.08);
+        }
+
+        .success-icon {
+            font-size: 65px;
+        }
+
+        h1 {
+            color: #68452b;
+        }
+
+        .order-box {
+            text-align: left;
+            margin: 25px 0;
+            padding: 22px;
+            border-radius: 12px;
+            background: #f4eadc;
+            overflow-wrap: anywhere;
+        }
+
+        .order-item,
+        .order-total {
+            display: flex;
+            justify-content: space-between;
+            gap: 15px;
+            padding: 12px 0;
+            border-bottom: 1px solid #dfcdb9;
+        }
+
+        .order-total {
+            font-size: 22px;
+            font-weight: bold;
+            border-bottom: none;
+        }
+
+        .customer-info {
+            border-top: 1px solid #dfcdb9;
+            margin-top: 20px;
+            padding-top: 15px;
+        }
+
+        .success-button {
+            display: inline-block;
+            margin: 8px;
+            padding: 13px 20px;
+            border-radius: 8px;
+            background: #70452a;
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .secondary-button {
+            background: #e9dccb;
+            color: #4d2e1b;
+        }
+
+        @media(max-width:600px) {
+            .success-container {
+                margin: 20px 12px;
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<main class="success-container">
+
+    <div class="success-icon">🎉☕</div>
+
+    <h1>Order Confirmed!</h1>
+
+    <p>Thank you for choosing Brew Café!</p>
+
+    <div class="order-box">
+
+        <h2>🧾 Your Order Summary</h2>
+
+        <p>
+            Order Reference:
+            <strong>{{ order.order_reference }}</strong>
+        </p>
+
+        <p>
+            Status:
+            <strong>{{ order.order_status }}</strong>
+        </p>
+
+        {% for item in items %}
+        <div class="order-item">
+            <span>
+                {{ item.item_name }} × {{ item.quantity }}
+            </span>
+
+            <strong>
+                ₹{{ "%.2f"|format(item.subtotal|float) }}
+            </strong>
+        </div>
+        {% endfor %}
+
+        <div class="order-total">
+            <span>Total</span>
+            <span>₹{{ "%.2f"|format(order.total_amount|float) }}</span>
+        </div>
+
+        <div class="customer-info">
+
+            <h3>Delivery Details</h3>
+
+            <p>
+                <strong>Name:</strong>
+                {{ order.customer_name }}
+            </p>
+
+            <p>
+                <strong>Phone:</strong>
+                {{ order.phone }}
+            </p>
+
+            <p>
+                <strong>Address:</strong>
+                {{ order.address }}
+            </p>
+
+            <p>
+                <strong>Placed on:</strong>
+                {{ order.created_at }}
+            </p>
+
+        </div>
+
+    </div>
+
+    <p>Your order has been saved in our database.</p>
+
+    <a href="/menu" class="success-button">Order More ☕</a>
+
+    <a href="/" class="success-button secondary-button">Back to Home</a>
+
+</main>
+
+</body>
+</html>

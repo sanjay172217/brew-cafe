@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Brew Café | Admin Dashboard</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #100d0b;
+            color: #f5eee6;
+        }
+
+        .sidebar {
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 235px;
+            height: 100vh;
+            background: #19130f;
+            border-right: 1px solid #3d2b1c;
+            padding: 30px 20px;
+        }
+
+        .brand {
+            font-size: 25px;
+            font-weight: bold;
+            color: #d8ad70;
+            margin-bottom: 8px;
+        }
+
+        .brand-subtitle {
+            font-size: 12px;
+            color: #9e8a76;
+            margin-bottom: 45px;
+        }
+
+        .nav-label {
+            color: #8f7c69;
+            font-size: 11px;
+            letter-spacing: 2px;
+            margin-bottom: 15px;
+        }
+
+        .nav-item {
+            display: block;
+            padding: 14px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            text-decoration: none;
+            color: #e6d6c6;
+        }
+
+        .nav-item.active {
+            background: #38271b;
+            color: #e5b879;
+        }
+
+        .logout {
+            position: absolute;
+            bottom: 30px;
+            left: 20px;
+            right: 20px;
+            text-align: center;
+            border: 1px solid #63472d;
+            color: #e5b879;
+        }
+
+        .main {
+            margin-left: 235px;
+            padding: 35px;
+        }
+
+        .topbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 35px;
+            flex-wrap: wrap;
+        }
+
+        h1 {
+            font-size: 29px;
+            margin-bottom: 8px;
+        }
+
+        .muted {
+            color: #a8998b;
+            font-size: 14px;
+        }
+
+        .admin-badge {
+            background: #291f17;
+            border: 1px solid #59402a;
+            color: #e5b879;
+            padding: 12px 17px;
+            border-radius: 25px;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 18px;
+            margin-bottom: 25px;
+        }
+
+        .card {
+            background: #1c1713;
+            border: 1px solid #3a2b20;
+            border-radius: 13px;
+            padding: 23px;
+        }
+
+        .stat-title {
+            color: #b2a091;
+            font-size: 13px;
+            margin-bottom: 16px;
+        }
+
+        .stat-number {
+            color: #e4b675;
+            font-size: 29px;
+            font-weight: bold;
+        }
+
+        .sales-card {
+            margin-bottom: 30px;
+        }
+
+        .sales-card .stat-number {
+            font-size: 32px;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+        }
+
+        h2 {
+            font-size: 21px;
+        }
+
+        .search-form {
+            display: flex;
+            gap: 8px;
+        }
+
+        input {
+            background: #100d0b;
+            color: white;
+            border: 1px solid #4a3828;
+            border-radius: 7px;
+            padding: 11px 13px;
+            min-width: 220px;
+            outline: none;
+        }
+
+        input:focus {
+            border-color: #d8ad70;
+        }
+
+        button, .clear-btn {
+            background: #d8ad70;
+            color: #17100b;
+            border: none;
+            padding: 11px 15px;
+            border-radius: 7px;
+            cursor: pointer;
+            font-weight: bold;
+            text-decoration: none;
+            font-size: 13px;
+        }
+
+        .table-wrapper {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 850px;
+        }
+
+        th {
+            color: #c3a17b;
+            text-align: left;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            padding: 17px 12px;
+            border-bottom: 1px solid #493626;
+        }
+
+        td {
+            padding: 17px 12px;
+            border-bottom: 1px solid #30251c;
+            font-size: 13px;
+            vertical-align: top;
+        }
+
+        tbody tr:hover {
+            background: #241b15;
+        }
+
+        .reference {
+            color: #e5b879;
+            font-weight: bold;
+        }
+
+        .status {
+            display: inline-block;
+            padding: 7px 10px;
+            border-radius: 20px;
+            font-size: 11px;
+            background: #33271c;
+            color: #e6bd82;
+        }
+
+        .empty {
+            text-align: center;
+            padding: 40px;
+            color: #a8998b;
+        }
+
+        .alert {
+            background: #40231e;
+            color: #ffc1ad;
+            border: 1px solid #744135;
+            padding: 14px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        .flash {
+            background: #253323;
+            color: #c9e8bb;
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        @media (max-width: 1100px) {
+            .stats {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+        }
+
+        @media (max-width: 700px) {
+            .sidebar {
+                position: relative;
+                width: 100%;
+                height: auto;
+                padding: 20px;
+            }
+
+            .brand-subtitle {
+                margin-bottom: 20px;
+            }
+
+            .logout {
+                position: static;
+                margin-top: 15px;
+            }
+
+            .main {
+                margin-left: 0;
+                padding: 20px 14px;
+            }
+
+            .stats {
+                grid-template-columns: 1fr 1fr;
+                gap: 10px;
+            }
+
+            .card {
+                padding: 16px;
+            }
+
+            .stat-number {
+                font-size: 23px;
+            }
+
+            .search-form {
+                width: 100%;
+            }
+
+            input {
+                min-width: 0;
+                width: 100%;
+            }
+
+            h1 {
+                font-size: 24px;
+            }
+        }
+
+        @media (max-width: 380px) {
+            .stats {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <aside class="sidebar">
+        <div class="brand">☕ BREW CAFÉ</div>
+        <div class="brand-subtitle">ADMINISTRATION PANEL</div>
+
+        <div class="nav-label">MAIN MENU</div>
+
+        <a href="{{ url_for('admin_dashboard') }}"
+           class="nav-item active">
+            ▦ &nbsp; Dashboard
+        </a>
+
+        <a href="#orders" class="nav-item">
+            ☷ &nbsp; Customer Orders
+        </a>
+
+        <a href="{{ url_for('admin_logout') }}"
+           class="nav-item logout">
+            ↪ &nbsp; Logout
+        </a>
+    </aside>
+
+    <main class="main">
+
+        <header class="topbar">
+            <div>
+                <h1>Dashboard Overview</h1>
+                <p class="muted">
+                    Welcome back! Here's your café's latest activity.
+                </p>
+            </div>
+
+            <div class="admin-badge">
+                👤 {{ session.get('admin_username', 'Admin') }}
+            </div>
+        </header>
+
+        {% if dashboard_error %}
+            <div class="alert">
+                Unable to load the latest database information.
+                Check the Flask terminal for the error.
+            </div>
+        {% endif %}
+
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="flash">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+        <section class="stats">
+
+            <div class="card">
+                <div class="stat-title">TOTAL ORDERS</div>
+                <div class="stat-number">
+                    {{ stats.total_orders }}
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="stat-title">PENDING ORDERS</div>
+                <div class="stat-number">
+                    {{ stats.pending_orders }}
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="stat-title">PREPARING ORDERS</div>
+                <div class="stat-number">
+                    {{ stats.preparing_orders }}
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="stat-title">COMPLETED ORDERS</div>
+                <div class="stat-number">
+                    {{ stats.completed_orders }}
+                </div>
+            </div>
+
+        </section>
+
+        <section class="card sales-card">
+            <div class="stat-title">
+                TOTAL SALES FROM COMPLETED ORDERS
+            </div>
+
+            <div class="stat-number">
+                ₹{{ "%.2f"|format(stats.total_sales|float) }}
+            </div>
+        </section>
+
+        <section class="card" id="orders">
+
+            <div class="section-header">
+                <div>
+                    <h2>Customer Orders</h2>
+                    <p class="muted" style="margin-top: 7px;">
+                        Showing up to 100 matching orders.
+                    </p>
+                </div>
+
+                <form method="GET"
+                      action="{{ url_for('admin_dashboard') }}"
+                      class="search-form">
+
+                    <input
+                        type="text"
+                        name="q"
+                        placeholder="Search name or reference..."
+                        value="{{ search_term }}"
+                        maxlength="100"
+                    >
+
+                    <button type="submit">Search</button>
+
+                    {% if search_term %}
+                        <a class="clear-btn"
+                           href="{{ url_for('admin_dashboard') }}">
+                            Clear
+                        </a>
+                    {% endif %}
+
+                </form>
+            </div>
+
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Order</th>
+                            <th>Customer</th>
+                            <th>Items</th>
+                            <th>Total</th>
+                            <th>Status</th>
+                            <th>Date</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        {% for order in orders %}
+                            <tr>
+                                <td>
+    <span class="status">
+        {{ order.order_status }}
+    </span>
+
+    <form
+        method="POST"
+        action="{{ url_for('admin_order_status', order_id=order.id) }}"
+        style="margin-top: 10px;"
+    >
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+
+        <input
+            type="hidden"
+            name="q"
+            value="{{ search_term }}"
+        >
+
+        <select
+            name="status"
+            style="
+                background: #100d0b;
+                color: #e5b879;
+                border: 1px solid #63472d;
+                border-radius: 6px;
+                padding: 8px;
+                width: 125px;
+                margin-bottom: 7px;
+            "
+        >
+            <option value="Pending"
+                {% if order.order_status == 'Pending' %}selected{% endif %}>
+                Pending
+            </option>
+
+            <option value="Preparing"
+                {% if order.order_status == 'Preparing' %}selected{% endif %}>
+                Preparing
+            </option>
+
+            <option value="Completed"
+                {% if order.order_status == 'Completed' %}selected{% endif %}>
+                Completed
+            </option>
+        </select>
+
+        <button type="submit">Update</button>
+    </form>
+</td>
+
+                                <td>
+                                    <strong>
+                                        {{ order.customer_name }}
+                                    </strong>
+                                    <br>
+                                    <span class="muted">
+                                        {{ order.phone }}
+                                    </span>
+                                </td>
+
+                                <td>
+                                    {{ order.items or 'No items found' }}
+                                </td>
+
+                                <td>
+                                    ₹{{ "%.2f"|format(order.total_amount|float) }}
+                                </td>
+
+                                <td>
+                                    <span class="status">
+                                        {{ order.order_status }}
+                                    </span>
+                                </td>
+
+                                <td>
+                                    {{ order.created_at.strftime('%d %b %Y') if order.created_at else '—' }}
+                                </td>
+                            </tr>
+                        {% else %}
+                            <tr>
+                                <td colspan="6" class="empty">
+                                    No orders found.
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
+        </section>
+
+        <p class="muted" style="text-align:center; margin:25px 0;">
+            © {{ 2026 }} Brew Café · Admin Panel
+        </p>
+
+    </main>
+
+</body>
+</html>

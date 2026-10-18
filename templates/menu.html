@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Our Menu | Brew Café</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+
+    <script src="{{ url_for('static', filename='js/script.js') }}" defer></script>
+
+    <style>
+        .menu-hero {
+            padding: 65px 7%;
+            text-align: center;
+            background: #382318;
+            color: #fffaf3;
+        }
+
+        .menu-hero h1 {
+            font-family: "Playfair Display", serif;
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            margin-bottom: 12px;
+        }
+
+        .menu-hero p {
+            color: #e1cdb8;
+        }
+
+        .menu-catalog {
+            padding: 55px 7%;
+        }
+
+        .category-filters {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-bottom: 35px;
+        }
+
+        .filter-button {
+            border: 1px solid #ddcbbb;
+            background: white;
+            color: #704329;
+            border-radius: 25px;
+            padding: 10px 20px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        .filter-button.active,
+        .filter-button:hover {
+            background: #704329;
+            color: white;
+        }
+
+        .catalog-grid {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 22px;
+        }
+
+        .catalog-card {
+            background: white;
+            border: 1px solid #eee3d6;
+            border-radius: 10px;
+            overflow: hidden;
+            transition: transform .25s;
+        }
+
+        .catalog-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .catalog-card img {
+            width: 100%;
+            height: 190px;
+            object-fit: cover;
+            display: block;
+        }
+
+        .catalog-details {
+            padding: 17px;
+        }
+
+        .catalog-details h3 {
+            font-size: 1.05rem;
+        }
+
+        .catalog-details p {
+            color: #82776e;
+            font-size: .85rem;
+            min-height: 42px;
+            margin: 8px 0 12px;
+        }
+
+        .catalog-price {
+            color: #704329;
+            font-weight: 700;
+            margin-bottom: 13px;
+        }
+
+        .catalog-details .add-button {
+            width: 100%;
+        }
+
+        .catalog-card.hidden {
+            display: none;
+        }
+
+        .menu-cart-summary {
+            text-align: center;
+            margin-top: 30px;
+            color: #704329;
+            font-weight: 700;
+        }
+
+        @media (max-width: 950px) {
+            .catalog-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+        }
+
+        @media (max-width: 450px) {
+            .catalog-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .catalog-card img {
+                height: 230px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header class="navbar">
+    <a href="/" class="logo">☕ <span>Brew Café</span></a>
+
+    <button class="menu-toggle" id="menuToggle"
+            aria-label="Toggle navigation"
+            aria-expanded="false">☰</button>
+
+    <nav id="navLinks">
+        <a href="/">Home</a>
+        <a href="/menu">Menu</a>
+        <a href="/cart">Cart 🛒</a>
+        <a href="/booking">Book Table</a>
+        <a href="/about">About</a>
+        <a href="/contact">Contact</a>
+    </nav>
+</header>
+
+<main>
+
+    <section class="menu-hero">
+        <span class="eyebrow" style="color:#e4b978;">
+            FRESHLY PREPARED, ALWAYS
+        </span>
+
+        <h1>Our Delicious Menu</h1>
+
+        <p>Discover your favourites, freshly prepared with love.</p>
+    </section>
+
+    <section class="menu-catalog">
+
+        <div class="category-filters">
+            <button class="filter-button active" data-filter="all">All</button>
+            <button class="filter-button" data-filter="coffee">Coffee</button>
+            <button class="filter-button" data-filter="tea">Tea</button>
+            <button class="filter-button" data-filter="cold">Cold Drinks</button>
+            <button class="filter-button" data-filter="snacks">Snacks</button>
+            <button class="filter-button" data-filter="desserts">Desserts</button>
+        </div>
+
+        <div class="catalog-grid">
+
+            <article class="catalog-card" data-category="coffee">
+                <img src="https://images.unsplash.com/photo-1534778101976-62847782c213?auto=format&fit=crop&w=700&q=80"
+                     alt="Cappuccino">
+                <div class="catalog-details">
+                    <h3>Cappuccino</h3>
+                    <p>Espresso with steamed milk and creamy foam.</p>
+                    <div class="catalog-price">₹120</div>
+                    <button class="add-button" data-item="Cappuccino" data-price="120">
+                        Add to Order <span>+</span>
+                    </button>
+                </div>
+            </article>
+
+            <article class="catalog-card" data-category="coffee">
+                <img src="https://images.unsplash.com/photo-1461023058943-07fcbe16d735?auto=format&fit=crop&w=700&q=80"
+                     alt="Latte">
+                <div class="catalog-details">
+                    <h3>Latte</h3>
+                    <p>Smooth espresso blended with steamed milk.</p>
+                    <div class="catalog-price">₹130</div>
+                    <button class="add-button" data-item="Latte" data-price="130">
+                        Add to Order <span>+</span>
+                    </button>
+                </div>
+            </article>
+
+            <article class="catalog-card" data-category="coffee">
+                <img src="https://images.unsplash.com/photo-1517701604599-bb29b565090c?auto=format&fit=crop&w=700&q=80"
+                     alt="Americano">
+                <div class="catalog-details">
+                    <h3>Americano</h3>
+                    <p>Bold espresso with hot water.</p>
+                    <div class="catalog-price">₹100</div>
+                    <button class="add-button" data-item="Americano" data-price="100">
+                        Add to Order <span>+</span>
+                    </button>
+                </div>
+            </article>
+
+            <article class="catalog-card" data-category="tea">
+                <img src="https://images.unsplash.com/photo-1544787219-7f47ccb76574?auto=format&fit=crop&w=700&q=80"
+                     alt="Masala tea">
+                <div class="catalog-details">
+                    <h3>Masala Tea</h3>
+                    <p>Traditional tea with aromatic spices.</p>
+                    <div class="catalog-price">₹50</div>
+                    <button class="add-button" data-item="Masala Tea" data-price="50">
+                        Add to Order <span>+</span>
+                    </button>
+                </div>
+            </article>
+
+            <article class="catalog-card" data-category="cold">
+                <img src="https://images.unsplash.com/photo-1461023058943-07fcbe16d735?auto=format&fit=crop&w=700&q=80"
+                     alt="Iced coffee">
+                <div class="catalog-details">
+                    <h3>Iced Coffee</h3>
+                    <p>Chilled coffee for a refreshing break.</p>
+                    <div class="catalog-price">₹140</div>
+                    <button class="add-button" data-item="Iced Coffee" data-price="140">
+                        Add to Order <span>+</span>
+                    </button>
+                </div>
+            </article>
+
+            <article class="catalog-card" data-category="snacks">
+                <img src="https://images.unsplash.com/photo-1555507036-ab1f4038808a?auto=format&fit=crop&w=700&q=80"
+                     alt="Butter croissant">
+                <div class="catalog-details">
+                    <h3>Butter Croissant</h3>
+                    <p>A golden, flaky pastry baked fresh.</p>
+                    <div class="catalog-price">₹90</div>
+                    <button class="add-button" data-item="Butter Croissant" data-price="90">
+                        Add to Order <span>+</span>
+                    </button>
+                </div>
+            </article>
+
+            <article class="catalog-card" data-category="snacks">
+                <img src="https://images.unsplash.com/photo-1553909489-cd47e0ef937f?auto=format&fit=crop&w=700&q=80"
+                     alt="Sandwich">
+                <div class="catalog-details">
+                    <h3>Veg Sandwich</h3>
+                    <p>Fresh vegetables between toasted bread.</p>
+                    <div class="catalog-price">₹110</div>
+                    <button class="add-button" data-item="Veg Sandwich" data-price="110">
+                        Add to Order <span>+</span>
+                    </button>
+                </div>
+            </article>
+
+            <article class="catalog-card" data-category="desserts">
+                <img src="https://images.unsplash.com/photo-1578985545062-69928b1d9587?auto=format&fit=crop&w=700&q=80"
+                     alt="Chocolate cake">
+                <div class="catalog-details">
+                    <h3>Chocolate Cake</h3>
+                    <p>A rich, chocolatey treat for sweet moments.</p>
+                    <div class="catalog-price">₹160</div>
+                    <button class="add-button" data-item="Chocolate Cake" data-price="160">
+                        Add to Order <span>+</span>
+                    </button>
+                </div>
+            </article>
+
+        </div>
+
+        <div class="menu-cart-summary">
+    <p id="cartNotice" role="status" aria-live="polite"></p>
+    <a href="/cart" class="btn btn-primary">View Shopping Cart 🛒</a>
+</div>
+
+    </section>
+
+</main>
+
+<footer class="footer">
+    <a href="/" class="logo">☕ <span>Brew Café</span></a>
+    <p>Good Food. Good Mood. Made with ♥.</p>
+    <p class="copyright">© <span id="year"></span> Brew Café. Student project.</p>
+</footer>
+
+<script>
+    document.querySelectorAll(".filter-button").forEach(button => {
+        button.addEventListener("click", () => {
+            const filter = button.dataset.filter;
+
+            document.querySelectorAll(".filter-button").forEach(item => {
+                item.classList.remove("active");
+            });
+
+            button.classList.add("active");
+
+            document.querySelectorAll(".catalog-card").forEach(card => {
+                const matches =
+                    filter === "all" || card.dataset.category === filter;
+
+                card.classList.toggle("hidden", !matches);
+            });
+        });
+    });
+</script>
+
+</body>
+</html>
